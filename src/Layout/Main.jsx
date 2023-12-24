@@ -1,16 +1,44 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import useAxiosPublic from '../hooks/useAxiosPublic';
+import AllPhones from '../Pages/AllPhones/AllPhones';
 
 const Main = () => {
+  const [searchResult,setSearchResult]= useState(null)
+  const [searching, setSearching] = useState(false);
+  const navigate=useNavigate()
+  console.log(searchResult,'iam result');
+  const axiospublic=useAxiosPublic()
     const links= <>
       <li> <Link to={'/'}>Home</Link> </li>
       <li> <Link to={'/'}>About</Link> </li>
       <li> <Link to={'/cart'}>Cart</Link> </li>
+      <li> <Link to={'/allphones'}>All phones</Link> </li>
       <li> <Link to={'/'}>store</Link> </li>
       <li> <Link to={'/'}>Blog</Link> </li>
       <li> <Link to={'/'}>Contact</Link> </li>
      
     </>
+
+    const handleSearch=async(search)=>{
+        search.preventDefault()
+        const value= search.target.search.value
+         try {
+          setSearching(true);
+       const doSearch= await axiospublic.get(`api/v1/search?search=${value}`)
+        console.log(doSearch,'dosearch');
+      
+          setSearchResult(doSearch.data)
+          navigate('/allphones')
+        
+
+         } catch (error) {
+           console.log(error);
+         }
+         finally{
+          setSearching(false)
+         }
+    }
     return (
 <div className="drawer">
   <input id="my-drawer-3" type="checkbox" className="drawer-toggle" /> 
@@ -24,7 +52,9 @@ const Main = () => {
       </div> 
       <div className=" px-2 mx-2">
 
-      <input type="text" placeholder="search here" className="input input-bordered rounded-2xl w-full max-w-xs" />
+      <form onSubmit={handleSearch} action="">
+      <input name='search' type="text" placeholder="search here" className="input input-bordered rounded-2xl w-full max-w-xs" />
+      </form>
 
       </div>
       <div className="flex-1 hidden lg:block">
@@ -37,9 +67,18 @@ const Main = () => {
       </div>
     </div>
     {/* Page content here */}
-     <Outlet></Outlet>
+
+    <Outlet></Outlet>
+   
+   {
+    searchResult && <AllPhones search={searchResult}></AllPhones> 
+
+   }
+    
+
+
   </div> 
-  <div className="drawer-side">
+  <div className="drawer-side z-10 w-60">
     <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label> 
     <ul className="menu p-4 w-80 min-h-full bg-base-200">
       {/* Sidebar content here */}
