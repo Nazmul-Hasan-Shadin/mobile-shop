@@ -5,6 +5,7 @@ const Main = () => {
     const links= <>
       <li> <Link to={'/'}>Home</Link> </li>
       <li> <Link to={'/'}>About</Link> </li>
+      <li> <Link to={'/cart'}>Cart</Link> </li>
       <li> <Link to={'/'}>store</Link> </li>
       <li> <Link to={'/'}>Blog</Link> </li>
       <li> <Link to={'/'}>Contact</Link> </li>
