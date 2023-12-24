@@ -23,7 +23,7 @@ const Banner = () => {
         <SwiperSlide>
             <div className='relative'>
                 <img src={slider1} alt="" />
-                <div className='absolute left-[55%] lg:right-64 space-y-2 lg:space-y-4 top-1/4 text-white'>
+                <div className='absolute left-[55%] md:right-64 space-y-2 md:space-y-1 top-1/4 text-white'>
                     <h2 className='lg:text-4xl '>Samphony V48</h2>
                     <p className='hidden lg:block'>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br /> Voluptatibus maiores quas obcaecati. Tenetur, vitae!</p>
                     <button className='btn-sm lg:btn w-32 bg-slate-900 text-white'>Buy Now</button>
